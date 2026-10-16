@@ -1,0 +1,955 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="projectModel.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.5" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="afterservicerequest">
+          <Key>
+            <PropertyRef Name="RequestID" />
+          </Key>
+          <Property Name="RequestID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="OrderID" Type="varchar" MaxLength="20" />
+          <Property Name="RequestType" Type="varchar" MaxLength="50" />
+          <Property Name="Reason" Type="text" />
+          <Property Name="Status" Type="varchar" MaxLength="50" />
+          <Property Name="RequestDate" Type="datetime" Precision="0" />
+          <Property Name="HandledBy" Type="varchar" MaxLength="100" />
+          <Property Name="ForwardTo" Type="varchar" MaxLength="2" />
+          <Property Name="PhotoPath" Type="varchar" MaxLength="500" />
+        </EntityType>
+        <EntityType Name="delivery">
+          <Key>
+            <PropertyRef Name="DeliveryID" />
+          </Key>
+          <Property Name="DeliveryID" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="OrderID" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="DeliveryDate" Type="datetime" Precision="0" />
+          <Property Name="DeliveryStatus" Type="varchar" MaxLength="20" />
+          <Property Name="HandledBy" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="employee">
+          <Key>
+            <PropertyRef Name="EmployeeID" />
+          </Key>
+          <Property Name="EmployeeID" Type="char" MaxLength="5" Nullable="false" />
+          <Property Name="EmployeeName" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Password" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="PhoneNumber" Type="char" MaxLength="8" Nullable="false" />
+          <Property Name="Department" Type="char" MaxLength="2" Nullable="false" />
+        </EntityType>
+        <EntityType Name="invoice">
+          <Key>
+            <PropertyRef Name="InvoiceID" />
+          </Key>
+          <Property Name="InvoiceID" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="OrderID" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="PaymentMethod" Type="varchar" MaxLength="50" />
+          <Property Name="TotalAmount" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="CreatedBy" Type="varchar" MaxLength="50" />
+          <Property Name="CreatedDate" Type="datetime" Precision="0" />
+        </EntityType>
+        <EntityType Name="order_items">
+          <Key>
+            <PropertyRef Name="OrderItemID" />
+          </Key>
+          <Property Name="OrderItemID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProductID" Type="char" MaxLength="10" />
+          <Property Name="ProductName" Type="varchar" MaxLength="100" />
+          <Property Name="Qty" Type="int" />
+          <Property Name="UnitPrice" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="SubTotal" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="OrderID" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="orders">
+          <Key>
+            <PropertyRef Name="OrderID" />
+          </Key>
+          <Property Name="OrderID" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="CustomerName" Type="varchar" MaxLength="100" />
+          <Property Name="CustomerPhone" Type="char" MaxLength="8" />
+          <Property Name="CustomerEmail" Type="varchar" MaxLength="100" />
+          <Property Name="DeliveryAddress" Type="varchar" MaxLength="255" />
+          <Property Name="OrderDate" Type="datetime" Precision="0" />
+          <Property Name="DeliveryDate" Type="datetime" Precision="0" />
+          <Property Name="TotalAmount" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="Status" Type="varchar" MaxLength="20" />
+          <Property Name="CreatedBy" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="procurement">
+          <Key>
+            <PropertyRef Name="ProcurementID" />
+          </Key>
+          <Property Name="ProcurementID" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="EmployeeID" Type="char" MaxLength="5" Nullable="false" />
+          <Property Name="DeliveryDate" Type="datetime" Precision="0" />
+          <Property Name="Status" Type="varchar" MaxLength="20" />
+          <Property Name="TotalItems" Type="int" />
+          <Property Name="CreatedDate" Type="datetime" Precision="0" />
+          <Property Name="CreatedBy" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="procurement_items">
+          <Key>
+            <PropertyRef Name="ProcurementItemID" />
+          </Key>
+          <Property Name="ProcurementItemID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProcurementID" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="MaterialID" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="MaterialName" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Quantity" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="product">
+          <Key>
+            <PropertyRef Name="ProductID" />
+          </Key>
+          <Property Name="ProductID" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="ProductName" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="unitPrice" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="Qty" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="rawmaterialrequest">
+          <Key>
+            <PropertyRef Name="RequestID" />
+          </Key>
+          <Property Name="RequestID" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="EmployeeID" Type="char" MaxLength="5" Nullable="false" />
+          <Property Name="TakesTime" Type="datetime" Precision="0" />
+          <Property Name="Status" Type="varchar" MaxLength="20" />
+          <Property Name="CreatedBy" Type="varchar" MaxLength="50" />
+          <Property Name="CreatedDate" Type="datetime" Precision="0" />
+        </EntityType>
+        <EntityType Name="rawmaterialrequestitem">
+          <Key>
+            <PropertyRef Name="RequestItemID" />
+          </Key>
+          <Property Name="RequestItemID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RequestID" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="MaterialID" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="MaterialName" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Quantity" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="rawmaterials">
+          <Key>
+            <PropertyRef Name="MaterialID" />
+          </Key>
+          <Property Name="MaterialID" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="MaterialName" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Category" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="StockQty" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="replyslip">
+          <Key>
+            <PropertyRef Name="ReplyID" />
+          </Key>
+          <Property Name="ReplyID" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="DeliveryID" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="OrderID" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Remarks" Type="text" />
+          <Property Name="CreatedBy" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="fk_delivery_order">
+          <End Role="orders" Type="Self.orders" Multiplicity="1" />
+          <End Role="delivery" Type="Self.delivery" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="orders">
+              <PropertyRef Name="OrderID" />
+            </Principal>
+            <Dependent Role="delivery">
+              <PropertyRef Name="OrderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_detail_material">
+          <End Role="rawmaterials" Type="Self.rawmaterials" Multiplicity="1" />
+          <End Role="rawmaterialrequestitem" Type="Self.rawmaterialrequestitem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="rawmaterials">
+              <PropertyRef Name="MaterialID" />
+            </Principal>
+            <Dependent Role="rawmaterialrequestitem">
+              <PropertyRef Name="MaterialID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_detail_request">
+          <End Role="rawmaterialrequest" Type="Self.rawmaterialrequest" Multiplicity="1" />
+          <End Role="rawmaterialrequestitem" Type="Self.rawmaterialrequestitem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="rawmaterialrequest">
+              <PropertyRef Name="RequestID" />
+            </Principal>
+            <Dependent Role="rawmaterialrequestitem">
+              <PropertyRef Name="RequestID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_invoice_order">
+          <End Role="orders" Type="Self.orders" Multiplicity="1" />
+          <End Role="invoice" Type="Self.invoice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="orders">
+              <PropertyRef Name="OrderID" />
+            </Principal>
+            <Dependent Role="invoice">
+              <PropertyRef Name="OrderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_order">
+          <End Role="orders" Type="Self.orders" Multiplicity="0..1" />
+          <End Role="order_items" Type="Self.order_items" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="orders">
+              <PropertyRef Name="OrderID" />
+            </Principal>
+            <Dependent Role="order_items">
+              <PropertyRef Name="OrderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_order_af">
+          <End Role="orders" Type="Self.orders" Multiplicity="0..1" />
+          <End Role="afterservicerequest" Type="Self.afterservicerequest" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="orders">
+              <PropertyRef Name="OrderID" />
+            </Principal>
+            <Dependent Role="afterservicerequest">
+              <PropertyRef Name="OrderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_procurement_employee">
+          <End Role="employee" Type="Self.employee" Multiplicity="1" />
+          <End Role="procurement" Type="Self.procurement" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="employee">
+              <PropertyRef Name="EmployeeID" />
+            </Principal>
+            <Dependent Role="procurement">
+              <PropertyRef Name="EmployeeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_procurement_items_material">
+          <End Role="rawmaterials" Type="Self.rawmaterials" Multiplicity="1" />
+          <End Role="procurement_items" Type="Self.procurement_items" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="rawmaterials">
+              <PropertyRef Name="MaterialID" />
+            </Principal>
+            <Dependent Role="procurement_items">
+              <PropertyRef Name="MaterialID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_procurement_items_procurement">
+          <End Role="procurement" Type="Self.procurement" Multiplicity="1" />
+          <End Role="procurement_items" Type="Self.procurement_items" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="procurement">
+              <PropertyRef Name="ProcurementID" />
+            </Principal>
+            <Dependent Role="procurement_items">
+              <PropertyRef Name="ProcurementID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_product">
+          <End Role="product" Type="Self.product" Multiplicity="0..1" />
+          <End Role="order_items" Type="Self.order_items" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="product">
+              <PropertyRef Name="ProductID" />
+            </Principal>
+            <Dependent Role="order_items">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_reply_delivery">
+          <End Role="delivery" Type="Self.delivery" Multiplicity="1" />
+          <End Role="replyslip" Type="Self.replyslip" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="delivery">
+              <PropertyRef Name="DeliveryID" />
+            </Principal>
+            <Dependent Role="replyslip">
+              <PropertyRef Name="DeliveryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_reply_order">
+          <End Role="orders" Type="Self.orders" Multiplicity="1" />
+          <End Role="replyslip" Type="Self.replyslip" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="orders">
+              <PropertyRef Name="OrderID" />
+            </Principal>
+            <Dependent Role="replyslip">
+              <PropertyRef Name="OrderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_request_employee">
+          <End Role="employee" Type="Self.employee" Multiplicity="1" />
+          <End Role="rawmaterialrequest" Type="Self.rawmaterialrequest" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="employee">
+              <PropertyRef Name="EmployeeID" />
+            </Principal>
+            <Dependent Role="rawmaterialrequest">
+              <PropertyRef Name="EmployeeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="projectModelStoreContainer">
+          <EntitySet Name="afterservicerequest" EntityType="Self.afterservicerequest" Schema="project" store:Type="Tables" />
+          <EntitySet Name="delivery" EntityType="Self.delivery" Schema="project" store:Type="Tables" />
+          <EntitySet Name="employee" EntityType="Self.employee" Schema="project" store:Type="Tables" />
+          <EntitySet Name="invoice" EntityType="Self.invoice" Schema="project" store:Type="Tables" />
+          <EntitySet Name="order_items" EntityType="Self.order_items" Schema="project" store:Type="Tables" />
+          <EntitySet Name="orders" EntityType="Self.orders" Schema="project" store:Type="Tables" />
+          <EntitySet Name="procurement" EntityType="Self.procurement" Schema="project" store:Type="Tables" />
+          <EntitySet Name="procurement_items" EntityType="Self.procurement_items" Schema="project" store:Type="Tables" />
+          <EntitySet Name="product" EntityType="Self.product" Schema="project" store:Type="Tables" />
+          <EntitySet Name="rawmaterialrequest" EntityType="Self.rawmaterialrequest" Schema="project" store:Type="Tables" />
+          <EntitySet Name="rawmaterialrequestitem" EntityType="Self.rawmaterialrequestitem" Schema="project" store:Type="Tables" />
+          <EntitySet Name="rawmaterials" EntityType="Self.rawmaterials" Schema="project" store:Type="Tables" />
+          <EntitySet Name="replyslip" EntityType="Self.replyslip" Schema="project" store:Type="Tables" />
+          <AssociationSet Name="fk_delivery_order" Association="Self.fk_delivery_order">
+            <End Role="orders" EntitySet="orders" />
+            <End Role="delivery" EntitySet="delivery" />
+          </AssociationSet>
+          <AssociationSet Name="fk_detail_material" Association="Self.fk_detail_material">
+            <End Role="rawmaterials" EntitySet="rawmaterials" />
+            <End Role="rawmaterialrequestitem" EntitySet="rawmaterialrequestitem" />
+          </AssociationSet>
+          <AssociationSet Name="fk_detail_request" Association="Self.fk_detail_request">
+            <End Role="rawmaterialrequest" EntitySet="rawmaterialrequest" />
+            <End Role="rawmaterialrequestitem" EntitySet="rawmaterialrequestitem" />
+          </AssociationSet>
+          <AssociationSet Name="fk_invoice_order" Association="Self.fk_invoice_order">
+            <End Role="orders" EntitySet="orders" />
+            <End Role="invoice" EntitySet="invoice" />
+          </AssociationSet>
+          <AssociationSet Name="fk_order" Association="Self.fk_order">
+            <End Role="orders" EntitySet="orders" />
+            <End Role="order_items" EntitySet="order_items" />
+          </AssociationSet>
+          <AssociationSet Name="fk_order_af" Association="Self.fk_order_af">
+            <End Role="orders" EntitySet="orders" />
+            <End Role="afterservicerequest" EntitySet="afterservicerequest" />
+          </AssociationSet>
+          <AssociationSet Name="fk_procurement_employee" Association="Self.fk_procurement_employee">
+            <End Role="employee" EntitySet="employee" />
+            <End Role="procurement" EntitySet="procurement" />
+          </AssociationSet>
+          <AssociationSet Name="fk_procurement_items_material" Association="Self.fk_procurement_items_material">
+            <End Role="rawmaterials" EntitySet="rawmaterials" />
+            <End Role="procurement_items" EntitySet="procurement_items" />
+          </AssociationSet>
+          <AssociationSet Name="fk_procurement_items_procurement" Association="Self.fk_procurement_items_procurement">
+            <End Role="procurement" EntitySet="procurement" />
+            <End Role="procurement_items" EntitySet="procurement_items" />
+          </AssociationSet>
+          <AssociationSet Name="fk_product" Association="Self.fk_product">
+            <End Role="product" EntitySet="product" />
+            <End Role="order_items" EntitySet="order_items" />
+          </AssociationSet>
+          <AssociationSet Name="fk_reply_delivery" Association="Self.fk_reply_delivery">
+            <End Role="delivery" EntitySet="delivery" />
+            <End Role="replyslip" EntitySet="replyslip" />
+          </AssociationSet>
+          <AssociationSet Name="fk_reply_order" Association="Self.fk_reply_order">
+            <End Role="orders" EntitySet="orders" />
+            <End Role="replyslip" EntitySet="replyslip" />
+          </AssociationSet>
+          <AssociationSet Name="fk_request_employee" Association="Self.fk_request_employee">
+            <End Role="employee" EntitySet="employee" />
+            <End Role="rawmaterialrequest" EntitySet="rawmaterialrequest" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="projectModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="afterservicerequest">
+          <Key>
+            <PropertyRef Name="RequestID" />
+          </Key>
+          <Property Name="RequestID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OrderID" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="RequestType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Reason" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="RequestDate" Type="DateTime" />
+          <Property Name="HandledBy" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ForwardTo" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="orders" Relationship="Self.fk_order_af" FromRole="afterservicerequest" ToRole="orders" />
+          <Property Name="PhotoPath" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="delivery">
+          <Key>
+            <PropertyRef Name="DeliveryID" />
+          </Key>
+          <Property Name="DeliveryID" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="OrderID" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DeliveryDate" Type="DateTime" />
+          <Property Name="DeliveryStatus" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="HandledBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="orders" Relationship="Self.fk_delivery_order" FromRole="delivery" ToRole="orders" />
+          <NavigationProperty Name="replyslip" Relationship="Self.fk_reply_delivery" FromRole="delivery" ToRole="replyslip" />
+        </EntityType>
+        <EntityType Name="employee">
+          <Key>
+            <PropertyRef Name="EmployeeID" />
+          </Key>
+          <Property Name="EmployeeID" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="EmployeeName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="8" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Department" Type="String" MaxLength="2" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="procurement" Relationship="Self.fk_procurement_employee" FromRole="employee" ToRole="procurement" />
+          <NavigationProperty Name="rawmaterialrequest" Relationship="Self.fk_request_employee" FromRole="employee" ToRole="rawmaterialrequest" />
+        </EntityType>
+        <EntityType Name="invoice">
+          <Key>
+            <PropertyRef Name="InvoiceID" />
+          </Key>
+          <Property Name="InvoiceID" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="OrderID" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PaymentMethod" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="TotalAmount" Type="Decimal" Nullable="false" />
+          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedDate" Type="DateTime" />
+          <NavigationProperty Name="orders" Relationship="Self.fk_invoice_order" FromRole="invoice" ToRole="orders" />
+        </EntityType>
+        <EntityType Name="order_items">
+          <Key>
+            <PropertyRef Name="OrderItemID" />
+          </Key>
+          <Property Name="OrderItemID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProductID" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="ProductName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Qty" Type="Int32" />
+          <Property Name="UnitPrice" Type="Decimal" />
+          <Property Name="SubTotal" Type="Decimal" />
+          <Property Name="OrderID" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="orders" Relationship="Self.fk_order" FromRole="order_items" ToRole="orders" />
+          <NavigationProperty Name="product" Relationship="Self.fk_product" FromRole="order_items" ToRole="product" />
+        </EntityType>
+        <EntityType Name="orders">
+          <Key>
+            <PropertyRef Name="OrderID" />
+          </Key>
+          <Property Name="OrderID" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CustomerName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="CustomerPhone" Type="String" MaxLength="8" FixedLength="false" Unicode="false" />
+          <Property Name="CustomerEmail" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="DeliveryAddress" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="OrderDate" Type="DateTime" />
+          <Property Name="DeliveryDate" Type="DateTime" />
+          <Property Name="TotalAmount" Type="Decimal" />
+          <Property Name="Status" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="afterservicerequest" Relationship="Self.fk_order_af" FromRole="orders" ToRole="afterservicerequest" />
+          <NavigationProperty Name="delivery" Relationship="Self.fk_delivery_order" FromRole="orders" ToRole="delivery" />
+          <NavigationProperty Name="invoice" Relationship="Self.fk_invoice_order" FromRole="orders" ToRole="invoice" />
+          <NavigationProperty Name="order_items" Relationship="Self.fk_order" FromRole="orders" ToRole="order_items" />
+          <NavigationProperty Name="replyslip" Relationship="Self.fk_reply_order" FromRole="orders" ToRole="replyslip" />
+        </EntityType>
+        <EntityType Name="procurement">
+          <Key>
+            <PropertyRef Name="ProcurementID" />
+          </Key>
+          <Property Name="ProcurementID" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="EmployeeID" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DeliveryDate" Type="DateTime" />
+          <Property Name="Status" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="TotalItems" Type="Int32" />
+          <Property Name="CreatedDate" Type="DateTime" />
+          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="employee" Relationship="Self.fk_procurement_employee" FromRole="procurement" ToRole="employee" />
+          <NavigationProperty Name="procurement_items" Relationship="Self.fk_procurement_items_procurement" FromRole="procurement" ToRole="procurement_items" />
+        </EntityType>
+        <EntityType Name="procurement_items">
+          <Key>
+            <PropertyRef Name="ProcurementItemID" />
+          </Key>
+          <Property Name="ProcurementItemID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProcurementID" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="MaterialID" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="MaterialName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Quantity" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="procurement" Relationship="Self.fk_procurement_items_procurement" FromRole="procurement_items" ToRole="procurement" />
+          <NavigationProperty Name="rawmaterials" Relationship="Self.fk_procurement_items_material" FromRole="procurement_items" ToRole="rawmaterials" />
+        </EntityType>
+        <EntityType Name="product">
+          <Key>
+            <PropertyRef Name="ProductID" />
+          </Key>
+          <Property Name="ProductID" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ProductName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="unitPrice" Type="Decimal" Nullable="false" />
+          <Property Name="Qty" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="order_items" Relationship="Self.fk_product" FromRole="product" ToRole="order_items" />
+        </EntityType>
+        <EntityType Name="rawmaterialrequest">
+          <Key>
+            <PropertyRef Name="RequestID" />
+          </Key>
+          <Property Name="RequestID" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="EmployeeID" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="TakesTime" Type="DateTime" />
+          <Property Name="Status" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedDate" Type="DateTime" />
+          <NavigationProperty Name="employee" Relationship="Self.fk_request_employee" FromRole="rawmaterialrequest" ToRole="employee" />
+          <NavigationProperty Name="rawmaterialrequestitem" Relationship="Self.fk_detail_request" FromRole="rawmaterialrequest" ToRole="rawmaterialrequestitem" />
+        </EntityType>
+        <EntityType Name="rawmaterialrequestitem">
+          <Key>
+            <PropertyRef Name="RequestItemID" />
+          </Key>
+          <Property Name="RequestItemID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RequestID" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="MaterialID" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="MaterialName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Quantity" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="rawmaterialrequest" Relationship="Self.fk_detail_request" FromRole="rawmaterialrequestitem" ToRole="rawmaterialrequest" />
+          <NavigationProperty Name="rawmaterials" Relationship="Self.fk_detail_material" FromRole="rawmaterialrequestitem" ToRole="rawmaterials" />
+        </EntityType>
+        <EntityType Name="rawmaterials">
+          <Key>
+            <PropertyRef Name="MaterialID" />
+          </Key>
+          <Property Name="MaterialID" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="MaterialName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Category" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="StockQty" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="procurement_items" Relationship="Self.fk_procurement_items_material" FromRole="rawmaterials" ToRole="procurement_items" />
+          <NavigationProperty Name="rawmaterialrequestitem" Relationship="Self.fk_detail_material" FromRole="rawmaterials" ToRole="rawmaterialrequestitem" />
+        </EntityType>
+        <EntityType Name="replyslip">
+          <Key>
+            <PropertyRef Name="ReplyID" />
+          </Key>
+          <Property Name="ReplyID" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DeliveryID" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="OrderID" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Remarks" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="delivery" Relationship="Self.fk_reply_delivery" FromRole="replyslip" ToRole="delivery" />
+          <NavigationProperty Name="orders" Relationship="Self.fk_reply_order" FromRole="replyslip" ToRole="orders" />
+        </EntityType>
+        <Association Name="fk_order_af">
+          <End Role="orders" Type="Self.orders" Multiplicity="0..1" />
+          <End Role="afterservicerequest" Type="Self.afterservicerequest" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="orders">
+              <PropertyRef Name="OrderID" />
+            </Principal>
+            <Dependent Role="afterservicerequest">
+              <PropertyRef Name="OrderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_delivery_order">
+          <End Role="orders" Type="Self.orders" Multiplicity="1" />
+          <End Role="delivery" Type="Self.delivery" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="orders">
+              <PropertyRef Name="OrderID" />
+            </Principal>
+            <Dependent Role="delivery">
+              <PropertyRef Name="OrderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_reply_delivery">
+          <End Role="delivery" Type="Self.delivery" Multiplicity="1" />
+          <End Role="replyslip" Type="Self.replyslip" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="delivery">
+              <PropertyRef Name="DeliveryID" />
+            </Principal>
+            <Dependent Role="replyslip">
+              <PropertyRef Name="DeliveryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_procurement_employee">
+          <End Role="employee" Type="Self.employee" Multiplicity="1" />
+          <End Role="procurement" Type="Self.procurement" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="employee">
+              <PropertyRef Name="EmployeeID" />
+            </Principal>
+            <Dependent Role="procurement">
+              <PropertyRef Name="EmployeeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_request_employee">
+          <End Role="employee" Type="Self.employee" Multiplicity="1" />
+          <End Role="rawmaterialrequest" Type="Self.rawmaterialrequest" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="employee">
+              <PropertyRef Name="EmployeeID" />
+            </Principal>
+            <Dependent Role="rawmaterialrequest">
+              <PropertyRef Name="EmployeeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_invoice_order">
+          <End Role="orders" Type="Self.orders" Multiplicity="1" />
+          <End Role="invoice" Type="Self.invoice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="orders">
+              <PropertyRef Name="OrderID" />
+            </Principal>
+            <Dependent Role="invoice">
+              <PropertyRef Name="OrderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_order">
+          <End Role="orders" Type="Self.orders" Multiplicity="0..1" />
+          <End Role="order_items" Type="Self.order_items" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="orders">
+              <PropertyRef Name="OrderID" />
+            </Principal>
+            <Dependent Role="order_items">
+              <PropertyRef Name="OrderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_product">
+          <End Role="product" Type="Self.product" Multiplicity="0..1" />
+          <End Role="order_items" Type="Self.order_items" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="product">
+              <PropertyRef Name="ProductID" />
+            </Principal>
+            <Dependent Role="order_items">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_reply_order">
+          <End Role="orders" Type="Self.orders" Multiplicity="1" />
+          <End Role="replyslip" Type="Self.replyslip" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="orders">
+              <PropertyRef Name="OrderID" />
+            </Principal>
+            <Dependent Role="replyslip">
+              <PropertyRef Name="OrderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_procurement_items_procurement">
+          <End Role="procurement" Type="Self.procurement" Multiplicity="1" />
+          <End Role="procurement_items" Type="Self.procurement_items" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="procurement">
+              <PropertyRef Name="ProcurementID" />
+            </Principal>
+            <Dependent Role="procurement_items">
+              <PropertyRef Name="ProcurementID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_procurement_items_material">
+          <End Role="rawmaterials" Type="Self.rawmaterials" Multiplicity="1" />
+          <End Role="procurement_items" Type="Self.procurement_items" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="rawmaterials">
+              <PropertyRef Name="MaterialID" />
+            </Principal>
+            <Dependent Role="procurement_items">
+              <PropertyRef Name="MaterialID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_detail_request">
+          <End Role="rawmaterialrequest" Type="Self.rawmaterialrequest" Multiplicity="1" />
+          <End Role="rawmaterialrequestitem" Type="Self.rawmaterialrequestitem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="rawmaterialrequest">
+              <PropertyRef Name="RequestID" />
+            </Principal>
+            <Dependent Role="rawmaterialrequestitem">
+              <PropertyRef Name="RequestID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_detail_material">
+          <End Role="rawmaterials" Type="Self.rawmaterials" Multiplicity="1" />
+          <End Role="rawmaterialrequestitem" Type="Self.rawmaterialrequestitem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="rawmaterials">
+              <PropertyRef Name="MaterialID" />
+            </Principal>
+            <Dependent Role="rawmaterialrequestitem">
+              <PropertyRef Name="MaterialID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="projectEntities3" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="afterservicerequest" EntityType="Self.afterservicerequest" />
+          <EntitySet Name="delivery" EntityType="Self.delivery" />
+          <EntitySet Name="employee" EntityType="Self.employee" />
+          <EntitySet Name="invoice" EntityType="Self.invoice" />
+          <EntitySet Name="order_items" EntityType="Self.order_items" />
+          <EntitySet Name="orders" EntityType="Self.orders" />
+          <EntitySet Name="procurement" EntityType="Self.procurement" />
+          <EntitySet Name="procurement_items" EntityType="Self.procurement_items" />
+          <EntitySet Name="product" EntityType="Self.product" />
+          <EntitySet Name="rawmaterialrequest" EntityType="Self.rawmaterialrequest" />
+          <EntitySet Name="rawmaterialrequestitem" EntityType="Self.rawmaterialrequestitem" />
+          <EntitySet Name="rawmaterials" EntityType="Self.rawmaterials" />
+          <EntitySet Name="replyslip" EntityType="Self.replyslip" />
+          <AssociationSet Name="fk_order_af" Association="Self.fk_order_af">
+            <End Role="orders" EntitySet="orders" />
+            <End Role="afterservicerequest" EntitySet="afterservicerequest" />
+          </AssociationSet>
+          <AssociationSet Name="fk_delivery_order" Association="Self.fk_delivery_order">
+            <End Role="orders" EntitySet="orders" />
+            <End Role="delivery" EntitySet="delivery" />
+          </AssociationSet>
+          <AssociationSet Name="fk_reply_delivery" Association="Self.fk_reply_delivery">
+            <End Role="delivery" EntitySet="delivery" />
+            <End Role="replyslip" EntitySet="replyslip" />
+          </AssociationSet>
+          <AssociationSet Name="fk_procurement_employee" Association="Self.fk_procurement_employee">
+            <End Role="employee" EntitySet="employee" />
+            <End Role="procurement" EntitySet="procurement" />
+          </AssociationSet>
+          <AssociationSet Name="fk_request_employee" Association="Self.fk_request_employee">
+            <End Role="employee" EntitySet="employee" />
+            <End Role="rawmaterialrequest" EntitySet="rawmaterialrequest" />
+          </AssociationSet>
+          <AssociationSet Name="fk_invoice_order" Association="Self.fk_invoice_order">
+            <End Role="orders" EntitySet="orders" />
+            <End Role="invoice" EntitySet="invoice" />
+          </AssociationSet>
+          <AssociationSet Name="fk_order" Association="Self.fk_order">
+            <End Role="orders" EntitySet="orders" />
+            <End Role="order_items" EntitySet="order_items" />
+          </AssociationSet>
+          <AssociationSet Name="fk_product" Association="Self.fk_product">
+            <End Role="product" EntitySet="product" />
+            <End Role="order_items" EntitySet="order_items" />
+          </AssociationSet>
+          <AssociationSet Name="fk_reply_order" Association="Self.fk_reply_order">
+            <End Role="orders" EntitySet="orders" />
+            <End Role="replyslip" EntitySet="replyslip" />
+          </AssociationSet>
+          <AssociationSet Name="fk_procurement_items_procurement" Association="Self.fk_procurement_items_procurement">
+            <End Role="procurement" EntitySet="procurement" />
+            <End Role="procurement_items" EntitySet="procurement_items" />
+          </AssociationSet>
+          <AssociationSet Name="fk_procurement_items_material" Association="Self.fk_procurement_items_material">
+            <End Role="rawmaterials" EntitySet="rawmaterials" />
+            <End Role="procurement_items" EntitySet="procurement_items" />
+          </AssociationSet>
+          <AssociationSet Name="fk_detail_request" Association="Self.fk_detail_request">
+            <End Role="rawmaterialrequest" EntitySet="rawmaterialrequest" />
+            <End Role="rawmaterialrequestitem" EntitySet="rawmaterialrequestitem" />
+          </AssociationSet>
+          <AssociationSet Name="fk_detail_material" Association="Self.fk_detail_material">
+            <End Role="rawmaterials" EntitySet="rawmaterials" />
+            <End Role="rawmaterialrequestitem" EntitySet="rawmaterialrequestitem" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="projectModelStoreContainer" CdmEntityContainer="projectEntities3">
+          <EntitySetMapping Name="afterservicerequest">
+            <EntityTypeMapping TypeName="projectModel.afterservicerequest">
+              <MappingFragment StoreEntitySet="afterservicerequest">
+                <ScalarProperty Name="PhotoPath" ColumnName="PhotoPath" />
+                <ScalarProperty Name="RequestID" ColumnName="RequestID" />
+                <ScalarProperty Name="OrderID" ColumnName="OrderID" />
+                <ScalarProperty Name="RequestType" ColumnName="RequestType" />
+                <ScalarProperty Name="Reason" ColumnName="Reason" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="RequestDate" ColumnName="RequestDate" />
+                <ScalarProperty Name="HandledBy" ColumnName="HandledBy" />
+                <ScalarProperty Name="ForwardTo" ColumnName="ForwardTo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="delivery">
+            <EntityTypeMapping TypeName="projectModel.delivery">
+              <MappingFragment StoreEntitySet="delivery">
+                <ScalarProperty Name="DeliveryID" ColumnName="DeliveryID" />
+                <ScalarProperty Name="OrderID" ColumnName="OrderID" />
+                <ScalarProperty Name="DeliveryDate" ColumnName="DeliveryDate" />
+                <ScalarProperty Name="DeliveryStatus" ColumnName="DeliveryStatus" />
+                <ScalarProperty Name="HandledBy" ColumnName="HandledBy" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="employee">
+            <EntityTypeMapping TypeName="projectModel.employee">
+              <MappingFragment StoreEntitySet="employee">
+                <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
+                <ScalarProperty Name="EmployeeName" ColumnName="EmployeeName" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="Department" ColumnName="Department" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="invoice">
+            <EntityTypeMapping TypeName="projectModel.invoice">
+              <MappingFragment StoreEntitySet="invoice">
+                <ScalarProperty Name="InvoiceID" ColumnName="InvoiceID" />
+                <ScalarProperty Name="OrderID" ColumnName="OrderID" />
+                <ScalarProperty Name="PaymentMethod" ColumnName="PaymentMethod" />
+                <ScalarProperty Name="TotalAmount" ColumnName="TotalAmount" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="order_items">
+            <EntityTypeMapping TypeName="projectModel.order_items">
+              <MappingFragment StoreEntitySet="order_items">
+                <ScalarProperty Name="OrderItemID" ColumnName="OrderItemID" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="ProductName" ColumnName="ProductName" />
+                <ScalarProperty Name="Qty" ColumnName="Qty" />
+                <ScalarProperty Name="UnitPrice" ColumnName="UnitPrice" />
+                <ScalarProperty Name="SubTotal" ColumnName="SubTotal" />
+                <ScalarProperty Name="OrderID" ColumnName="OrderID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="orders">
+            <EntityTypeMapping TypeName="projectModel.orders">
+              <MappingFragment StoreEntitySet="orders">
+                <ScalarProperty Name="OrderID" ColumnName="OrderID" />
+                <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
+                <ScalarProperty Name="CustomerPhone" ColumnName="CustomerPhone" />
+                <ScalarProperty Name="CustomerEmail" ColumnName="CustomerEmail" />
+                <ScalarProperty Name="DeliveryAddress" ColumnName="DeliveryAddress" />
+                <ScalarProperty Name="OrderDate" ColumnName="OrderDate" />
+                <ScalarProperty Name="DeliveryDate" ColumnName="DeliveryDate" />
+                <ScalarProperty Name="TotalAmount" ColumnName="TotalAmount" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="procurement">
+            <EntityTypeMapping TypeName="projectModel.procurement">
+              <MappingFragment StoreEntitySet="procurement">
+                <ScalarProperty Name="ProcurementID" ColumnName="ProcurementID" />
+                <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
+                <ScalarProperty Name="DeliveryDate" ColumnName="DeliveryDate" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="TotalItems" ColumnName="TotalItems" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="procurement_items">
+            <EntityTypeMapping TypeName="projectModel.procurement_items">
+              <MappingFragment StoreEntitySet="procurement_items">
+                <ScalarProperty Name="ProcurementItemID" ColumnName="ProcurementItemID" />
+                <ScalarProperty Name="ProcurementID" ColumnName="ProcurementID" />
+                <ScalarProperty Name="MaterialID" ColumnName="MaterialID" />
+                <ScalarProperty Name="MaterialName" ColumnName="MaterialName" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="product">
+            <EntityTypeMapping TypeName="projectModel.product">
+              <MappingFragment StoreEntitySet="product">
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="ProductName" ColumnName="ProductName" />
+                <ScalarProperty Name="unitPrice" ColumnName="unitPrice" />
+                <ScalarProperty Name="Qty" ColumnName="Qty" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="rawmaterialrequest">
+            <EntityTypeMapping TypeName="projectModel.rawmaterialrequest">
+              <MappingFragment StoreEntitySet="rawmaterialrequest">
+                <ScalarProperty Name="RequestID" ColumnName="RequestID" />
+                <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
+                <ScalarProperty Name="TakesTime" ColumnName="TakesTime" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="rawmaterialrequestitem">
+            <EntityTypeMapping TypeName="projectModel.rawmaterialrequestitem">
+              <MappingFragment StoreEntitySet="rawmaterialrequestitem">
+                <ScalarProperty Name="RequestItemID" ColumnName="RequestItemID" />
+                <ScalarProperty Name="RequestID" ColumnName="RequestID" />
+                <ScalarProperty Name="MaterialID" ColumnName="MaterialID" />
+                <ScalarProperty Name="MaterialName" ColumnName="MaterialName" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="rawmaterials">
+            <EntityTypeMapping TypeName="projectModel.rawmaterials">
+              <MappingFragment StoreEntitySet="rawmaterials">
+                <ScalarProperty Name="MaterialID" ColumnName="MaterialID" />
+                <ScalarProperty Name="MaterialName" ColumnName="MaterialName" />
+                <ScalarProperty Name="Category" ColumnName="Category" />
+                <ScalarProperty Name="StockQty" ColumnName="StockQty" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="replyslip">
+            <EntityTypeMapping TypeName="projectModel.replyslip">
+              <MappingFragment StoreEntitySet="replyslip">
+                <ScalarProperty Name="ReplyID" ColumnName="ReplyID" />
+                <ScalarProperty Name="DeliveryID" ColumnName="DeliveryID" />
+                <ScalarProperty Name="OrderID" ColumnName="OrderID" />
+                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
